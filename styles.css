@@ -19,13 +19,39 @@
         transform: rotate(360deg);
     }
 }
+
+#country-info {
+    align-items: center;
+    margin: 0 auto;
+}
+
 /* Must have visible styling */
 .country-card {
+    border: 1px solid #cfead6;
+    border-radius: 5%;
+    background: #e9f7ef;
+    text-align: center;
+    margin-bottom: 16px;
+    width: 25%;
+    padding: 0.5em;
+}
+
+.country-card img {
+    width: clamp(80px, 50%, 150px);
+}
+
+#bordering-countries {
+    margin-top: 30px;
+    padding: 5em;
 }
 
 .border-grid {
-    display: grid; /* or display: flex */
+    display: flex; /* or display: flex */
     /* Additional layout properties */
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 3em;
 }
 
 .error {

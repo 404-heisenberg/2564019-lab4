@@ -1,8 +1,10 @@
-let searchBtn = document.getElementById("search-btn");
-let countryInput = document.getElementById("country-input");
-let loadingSpinner = document.getElementById("loading-spinner");
+const searchBtn = document.getElementById("search-btn");
+const countryInput = document.getElementById("country-input");
+const loadingSpinner = document.getElementById("loading-spinner");
+const countryInfo = document.getElementById("country-info");
 
 loadingSpinner.classList.add("hidden");
+countryInfo.classList.add("hidden");
 
 searchBtn.addEventListener("click", () => {
   const countryName = countryInput.value.trim();
@@ -29,6 +31,7 @@ countryInput.addEventListener("keydown", (e) => {
 async function searchCountry(countryName) {
   try {
     loadingSpinner.classList.remove("hidden");
+    countryInfo.classList.remove("hidden");
 
     const url = `https://restcountries.com/v3.1/name/${countryName}?fullText=true`;
     const response = await fetch(url);
@@ -36,7 +39,7 @@ async function searchCountry(countryName) {
 
     // get the country then process its data
     const country = data[0];
-    document.getElementById("country-info").innerHTML = `
+    countryInfo.innerHTML = `
         <h2>${country.name.common}</h2>
         <p><strong>Capital:</strong> ${country.capital[0]}</p>
         <p><strong>Population:</strong> ${country.population.toLocaleString()}</p>
@@ -46,7 +49,9 @@ async function searchCountry(countryName) {
 
     // get bordering countries
     const borderingCountries = country.borders;
-    searchBorders(borderingCountries);
+    if (borderingCountries.length > 0) {
+      searchBorders(borderingCountries);
+    }
   } catch (error) {
     const errorMsg = (document.getElementById("error-message").textContent =
       "Country not found.");
